@@ -696,7 +696,8 @@
 
   <footer>Adele Hontoir — Cardiff, UK — Built frame by frame.</footer>
   <script>
-    // Frame counter ticks up as each section enters view — nods to frame-by-frame animation.
+    // Frame counter ticks up as each section crosses the vertical middle of the screen —
+    // more reliable than an area-based threshold, since it works regardless of section height.
     const sections = ['hero', 'work', 'about', 'craft', 'contact'];
     const counter = document.getElementById('frameCounter');
     const pad = n => String(n).padStart(3, '0');
@@ -707,7 +708,7 @@
           if (idx > 0) counter.textContent = 'FRAME ' + pad(idx);
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0, rootMargin: '-50% 0px -50% 0px' });
     sections.forEach(id => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
