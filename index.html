@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adele Hontoir | Animator</title>
+  <title>Adele Hontoir — Animator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -147,7 +147,8 @@
 
     /* ---------- HERO ---------- */
     header.hero {
-      min-height: 100vh;
+      min-height: 100vh; /* fallback for browsers without dvh support */
+      min-height: 100dvh; /* tracks the real, visible mobile viewport, not the theoretical max */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -219,7 +220,6 @@
     }
 
     .hero-visual {
-      border: none;
       border-radius: 4px;
       aspect-ratio: 16/8;
       display: flex;
@@ -322,7 +322,7 @@
     }
 
     .media-slot {
-      border: none;
+      border: 1px dashed var(--line);
       border-radius: 3px;
       aspect-ratio: 16/9;
       display: flex;
@@ -540,7 +540,8 @@
     <header class="hero" id="hero">
       <!-- <div class="kicker">Cardiff, UK</div>-->
       <h1 class="name">Adele Hontoir</h1>
-      <p class="tagline">An animator telling character-driven stories about nature, care, and <br>the environment — one frame at a time.</p>
+      <p class="tagline">An animator telling character-driven stories about nature, care, and <br>the environment — one
+        frame at a time.</p>
       <div class="hero-cta">
         <a href="#work" class="btn btn-solid">My Work</a>
         <a href="#contact" class="btn btn-outline">Get in touch</a>
@@ -557,7 +558,7 @@
     <section id="work" class="divider">
       <div class="eyebrow"><span class="print"></span>FRAME 002 — FEATURED WORK</div>
       <h2 class="section-title">My Work</h2>
-      
+     
       <div class="project-card">
         <div class="project-title">Plastic Tides</div>
         <div class="project-meta">FINAL MAJOR PROJECT · 2026 · 2 min 27 secs · Stop motion / 2D / reverse applique</div>
@@ -577,9 +578,9 @@
               alt="Still from [Project Title]"></div>
         </div><br>
         <p class="project-desc">
-          The animation concerns the growing issue of plastic within our oceans and the impact that plastic has on marine life. 
-          Living in a seaside town, and seeing the effect that discarded plastic has had on our oceans, beaches and wildlife, 
-          is what inspired me to explore the topic of plastic in the oceans. A combination of stop motion and 2D animation was used to tell the story, 
+          The animation concerns the growing issue of plastic within our oceans and the impact that plastic has on marine life.
+          Living in a seaside town, and seeing the effect that discarded plastic has had on our oceans, beaches and wildlife,
+          is what inspired me to explore the topic of plastic in the oceans. A combination of stop motion and 2D animation was used to tell the story,
           as well as a fabric technique called Reverse Applique, which involves cutting out sections from multi-layered panels of fabric to reveal the layer below.<br><br>
           My final major project, made across my last year at Cardiff Metropolitan University.</p>
        </div>
@@ -603,13 +604,13 @@
               alt="Still from [Project Title]"></div>
         </div><br>
         <p class="project-desc">
-          The animation concerns the growing issue of plastic within our oceans and the impact that plastic has on marine life. 
-          Living in a seaside town, and seeing the effect that discarded plastic has had on our oceans, beaches and wildlife, 
-          is what inspired me to explore the topic of plastic in the oceans. A combination of stop motion and 2D animation was used to tell the story, 
+          The animation concerns the growing issue of plastic within our oceans and the impact that plastic has on marine life.
+          Living in a seaside town, and seeing the effect that discarded plastic has had on our oceans, beaches and wildlife,
+          is what inspired me to explore the topic of plastic in the oceans. A combination of stop motion and 2D animation was used to tell the story,
           as well as a fabric technique called Reverse Applique, which involves cutting out sections from multi-layered panels of fabric to reveal the layer below.<br><br>
           My final major project, made across my last year at Cardiff Metropolitan University.</p>
       </div>
-      
+     
     </section>
 
     <section id="about" class="divider">
@@ -643,7 +644,7 @@
     </section>
 
     <section id="craft" class="divider">
-      
+     
       <div class="eyebrow"><span class="print"></span>FRAME 004 — CRAFT</div>
       <h2 class="section-title">Tools &amp; approach</h2>
       <p class="section-lede">Tools that I work with, and how I work.</p>
@@ -707,7 +708,7 @@
           if (idx > 0) counter.textContent = 'FRAME ' + pad(idx);
         }
       });
-    }, { threshold: 0, rootMargin: '-50% 0px -50% 0px' });
+    }, { threshold: 0, rootMargin: '-20% 0px -80% 0px' });
     sections.forEach(id => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
