@@ -157,6 +157,16 @@
       padding-top: 50px;
     }
 
+    /* On phones, a full-screen-height hero leaves a large empty gap under the
+       (now more compact) content, so let it size to its content instead. */
+    @media (max-width: 640px) {
+      header.hero {
+        min-height: auto;
+        padding-top: 110px;
+        padding-bottom: 56px;
+      }
+    }
+
     .hero .kicker {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 13px;
@@ -690,23 +700,29 @@
 
   <footer>Adele Hontoir — Cardiff, UK — Built frame by frame.</footer>
   <script>
-    // Frame counter ticks up as each section crosses the vertical middle of the screen —
-    // more reliable than an area-based threshold, since it works regardless of section height.
+    // Frame counter: instead of relying on IntersectionObserver's initial async
+    // batch (which can misreport on the very first paint), directly check each
+    // section's position against a fixed line 20% down the viewport — on load,
+    // on scroll, and on resize. Deterministic and correct from frame one.
     const sections = ['hero', 'work', 'about', 'craft', 'contact'];
     const counter = document.getElementById('frameCounter');
     const pad = n => String(n).padStart(3, '0');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const idx = sections.indexOf(entry.target.id) + 1;
-          if (idx > 0) counter.textContent = 'FRAME ' + pad(idx);
-        }
+
+    function updateFrameCounter() {
+      const triggerY = window.innerHeight * 0.2;
+      let currentIdx = 0;
+      sections.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const top = el.getBoundingClientRect().top;
+        if (top <= triggerY) currentIdx = i;
       });
-    }, { threshold: 0, rootMargin: '-20% 0px -80% 0px' });
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+      counter.textContent = 'FRAME ' + pad(currentIdx + 1);
+    }
+
+    updateFrameCounter();
+    window.addEventListener('scroll', updateFrameCounter, { passive: true });
+    window.addEventListener('resize', updateFrameCounter);
   </script>
 
 </body>
