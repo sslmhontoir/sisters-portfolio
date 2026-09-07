@@ -157,9 +157,10 @@
       padding-top: 50px;
     }
 
-    /* On phones, a full-screen-height hero leaves a large empty gap under the
-       (now more compact) content, so let it size to its content instead. */
-    @media (max-width: 640px) {
+    /* On phones and tablets, a full-screen-height hero leaves a large empty gap
+       under the (now more compact) content, so let it size to its content instead.
+       1024px covers iPad in both portrait (768px) and landscape (1024px). */
+    @media (max-width: 1024px) {
       header.hero {
         min-height: auto;
         padding-top: 110px;
@@ -574,7 +575,7 @@
         <div class="award-badge">🏆 Winner — Future Generations Award, Cardiff Metropolitan University, 2026</div>
         <div class="media-slot">
           <!-- Project video: full controls, not autoplaying, since this is the main film someone chooses to watch. -->
-          <video controls playsinline>
+          <video controls playsinline preload="metadata">
             <source src="Adele%20Hontoir%20Project%20Video.mp4" type="video/mp4">
           </video>
         </div>
@@ -599,7 +600,7 @@
         <div class="project-meta">PROJECT TYPE · Year · Runtime · Animation Type</div>
         <div class="media-slot">
           <!-- Project video: full controls, not autoplaying, since this is the main film someone chooses to watch. -->
-          <video controls playsinline>
+          <video controls playsinline preload="metadata">
             <source src="Adele%20Hontoir%20Project%20Video.mp4" type="video/mp4">
           </video>
         </div>
@@ -717,6 +718,11 @@
         const top = el.getBoundingClientRect().top;
         if (top <= triggerY) currentIdx = i;
       });
+      // A short final section may never bring its own top past the trigger line —
+      // there's simply no more page left to scroll. Treat "at the bottom" as a
+      // guaranteed override so the last section always gets its turn.
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atBottom) currentIdx = sections.length - 1;
       counter.textContent = 'FRAME ' + pad(currentIdx + 1);
     }
 
